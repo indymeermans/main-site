@@ -1,0 +1,2 @@
+[03-Jul-2019 13:48:09 Europe/Amsterdam] PHP Warning:  require_once(Mail.php): failed to open stream: No such file or directory in /home/aldofi1q/indymeermans.be/mail.php on line 2
+[03-Jul-2019 13:48:09 Europe/Amsterdam] PHP Fatal error:  require_once(): Failed opening required 'Mail.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/aldofi1q/indymeermans.be/mail.php on line 2
