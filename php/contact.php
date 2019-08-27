@@ -15,8 +15,7 @@ $success = false;
 if ((bool) filter_var(trim($address), FILTER_VALIDATE_EMAIL)) {
   // Also set sender/return path header to this address to avoid SPF errors.
   $to = $sender = trim($address);
-}
-else {
+} else {
   $error = true;
 }
 
@@ -38,8 +37,7 @@ if (!empty($_POST['url'])) {
 // Check that e-mail address is valid.
 if ((bool) filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL)) {
   $email = trim($_POST['email']);
-}
-else {
+} else {
   $error = true;
 }
 
@@ -57,11 +55,10 @@ if (!$error) {
     'From'                      => "$name <$email>",
     'Sender'                    => $sender,
     'Return-Path'               => $sender,
-    'MIME-Version'              => '1.0\r\n',
-    'Content-Type'              => 'text/plain; charset=UTF-8\r\n; format=flowed; delsp=yes',
+    'MIME-Version'              => '1.0',
+    'Content-Type'              => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
     'Content-Transfer-Encoding' => '8Bit',
-    'X-Priority'                => '3\r\n',
-    'X-Mailer'                  => 'PHP". phpversion() ."\r\n"',
+    'X-Mailer'                  => 'Hugo - Zen',
   ];
   $mime_headers = [];
   foreach ($headers as $key => $value) {
@@ -70,7 +67,7 @@ if (!$error) {
   $mail_headers = join("\n", $mime_headers);
 
   // Send the mail, suppressing errors and setting Return-Path with the "-f" option.
-  $success = mail($to, $subject, $message, $mail_headers, '-f' . $sender);
+  $success = @mail($to, $subject, $message, $mail_headers, '-f' . $sender);
 }
 
 $status = $success ? 'submitted' : 'error';
@@ -80,11 +77,13 @@ $contact_form_url = strtok($_SERVER['HTTP_REFERER'], '?');
 header('Location: ' . $contact_form_url . '?' . $status, TRUE, 302);
 exit;
 
-function _contact_ff_wrap(&$line) {
+function _contact_ff_wrap(&$line)
+{
   $line = wordwrap($line, 72, " \n");
 }
 
-function _contact_clean_str($str, $quotes, $strip = false, $encode = false) {
+function _contact_clean_str($str, $quotes, $strip = false, $encode = false)
+{
   if ($strip) {
     $str = strip_tags($str);
   }
